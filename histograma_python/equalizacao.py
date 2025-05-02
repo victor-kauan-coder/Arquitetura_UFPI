@@ -2,10 +2,11 @@ import plotly.express as px
 from PIL import Image
 import os
 
-print(os.path.exists("./1.jpg"))
+base_dir = os.path.dirname(os.path.abspath(__file__))
+path_img = os.path.join(base_dir, 'imagem_pb.jpg')
 frequency_count = [0] * 256
 
-im = Image.open('./imagem_pb.jpg')
+im = Image.open(path_img)
 
 width, height = im.size
 for x in range(width):

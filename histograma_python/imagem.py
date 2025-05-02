@@ -1,8 +1,9 @@
 from PIL import Image
+import os
+base_dir = os.path.dirname(os.path.abspath(__file__))
+path_img = os.path.join(base_dir, '1.jpg')
 
-
-
-im = Image.open('C:/Users/kauan/Downloads/histograma/histograma/1.jpg')
+im = Image.open(path_img)
 
 width, height = im.size
 red_count = [[0 for _ in range(height)] for _ in range(width)]
