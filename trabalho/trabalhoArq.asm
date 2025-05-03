@@ -1,12 +1,16 @@
+.include "macro.asm"
 .data
-filename:      .string "C://Users//kauan//Documents//Code//Arquitetura//risc//trabalho//red_channel.bin"  
+filename:      .string "/home/davidson/Documentos/UFPI/3-periodo/Arquitetura-de-computadores/TrabalhoArquitetura/RISC-V/Arquitetura_UFPI/trabalho/red_channel.bin"  
+.align 2
+
 buffer:        .space 21120                # Buffer de 1KB
 frequencia: 	.space 1024
 success_msg:   .string "\nLeitura concluída. Bytes lidos: "
 error_open:    .string "\nErro ao abrir o arquivo!"
 error_read:    .string "\nErro ao ler o arquivo!"
 newline:       .string "\n"
-
+pixel:         .string "pixel "
+ocorrencia:     .string " - ocorrencia "
 .text
 .globl main
 
@@ -93,23 +97,15 @@ li t1,0
 li t2,256
 print_freq:
     beq t1,t2, exit
-    mv a0, t1
-    li a7, 1
-    ecall 
-    li a0, 58
-    li a7, 11
-    ecall
-    li a0, 32             
-    li a7, 11
-    ecall
+    print_string_from_label(pixel)
+    print_int(t1)
+    print_string_from_label(ocorrencia)
     slli t3, t1, 2
     add t4, t3, s0
     lw a0, 0(t4)
     li a7, 1
     ecall
-    la a0, newline
-    li a7,4
-    ecall
+    print_newline()
     addi t1,t1,1
     j print_freq
 exit:
