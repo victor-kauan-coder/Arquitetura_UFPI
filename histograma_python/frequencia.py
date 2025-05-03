@@ -9,11 +9,7 @@ frequency_count = []
 #21120
 im = Image.open(path_img)
 
-width, height = im.size
-for x in range(width):
-    for y in range(height):
-        r, g, b = im.getpixel((x, y))
-        frequency_count.append(r)
+frequency_count = list(im.getdata())
 
-fig = px.histogram(frequency_count, nbins=256, title="Interactive Histogram")
+fig = px.histogram([i[0] for i in frequency_count], nbins=256, title="Interactive Histogram")
 fig.show()
