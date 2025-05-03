@@ -5,11 +5,16 @@ from pathlib import Path
 import os
 base_dir = os.path.dirname(os.path.abspath(__file__))
 path_img = os.path.join(base_dir, '1.jpg')
-frequency_count = []
+print(path_img)
 #21120
 im = Image.open(path_img)
 
-frequency_count = list(im.getdata())
+red_frequency_count = list(i[0] for i in im.getdata())
 
-fig = px.histogram([i[0] for i in frequency_count], nbins=256, title="Interactive Histogram")
+bytes_red = bytes(red_frequency_count)
+with open("./trabalho/bins/red_channel.bin", 'wb') as f:
+    f.write(bytes_red)
+
+fig = px.histogram(red_frequency_count, nbins=256, title="Interactive Histogram")
 fig.show()
+

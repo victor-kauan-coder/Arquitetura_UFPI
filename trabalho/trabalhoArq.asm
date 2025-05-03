@@ -1,6 +1,6 @@
 .include "macro.asm"
 .data
-filename:      .string "/home/davidson/Documentos/UFPI/3-periodo/Arquitetura-de-computadores/TrabalhoArquitetura/RISC-V/Arquitetura_UFPI/trabalho/red_channel.bin"  
+filename:      .string "/home/davidson/Documentos/UFPI/3-periodo/Arquitetura-de-computadores/TrabalhoArquitetura/RISC-V/Arquitetura_UFPI/trabalho/bins/red_channel.bin"  
 .align 2
 
 buffer:        .space 21120                # Buffer de 1KB
