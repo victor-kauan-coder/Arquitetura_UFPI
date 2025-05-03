@@ -30,7 +30,7 @@ for sk in cdf:
     niveis.append(round(sk*(255)))
 
 print(niveis)
-nome_arquivo = 'histograma_equalizadoo.txt'
+nome_arquivo = 'histograma_equalizado.txt'
 
 
 with open(nome_arquivo, 'w') as file:
