@@ -9,3 +9,4 @@ pixel_count = bytes(pixel_count)
 
 with open('gray_pixel_count.bin', 'wb') as f:
     f.write(pixel_count)
+
