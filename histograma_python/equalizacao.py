@@ -3,8 +3,15 @@ from PIL import Image
 import os
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-path_img = os.path.join(base_dir, 'imagem_pb.jpg')
+path_img = os.path.join(base_dir, "imagem_pb.jpg")
 frequency_count = [0] * 256
+
+caminho_arquivo = os.path.join(base_dir, "message (2).txt")
+
+with open(caminho_arquivo, "r") as arquivo:
+    lista_asm = [int(linha.strip().split(":")[1]) for linha in arquivo]
+
+print(lista_asm)
 
 im = Image.open(path_img)
 
@@ -30,11 +37,11 @@ for sk in cdf:
     niveis.append(round(sk*(255)))
 
 print(niveis)
-nome_arquivo = 'histograma_equalizadoo.txt'
+nome_arquivo = 'histograma_equalizado.txt'
 
 
 with open(nome_arquivo, 'w') as file:
-    for pixel,value in enumerate(niveis):
+    for pixel,value in enumerate(lista_asm):
         file.write(f"Pixel {pixel} - ocorrencia {value}\n")
 
 print(f'O arquivo {nome_arquivo} foi criado com sucesso!')
@@ -43,11 +50,11 @@ im_equalizada = Image.new('L', (width, height))
 for x in range(width):
     for y in range(height):
         valor_original = im.getpixel((x, y))
-        novo_valor = niveis[valor_original]
+        novo_valor = lista_asm[valor_original]
         im_equalizada.putpixel((x, y), novo_valor)
 
 # Salva a nova imagem
-im_equalizada.save('imagem_equalizada.jpg')
+im_equalizada.save('imagem_equalizada_rars.jpg')
 
 fig = px.histogram(niveis, nbins=256, title="Interactive Histogram")
 fig.show()

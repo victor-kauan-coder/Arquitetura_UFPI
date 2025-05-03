@@ -1,9 +1,10 @@
 from PIL import Image
-
-img = Image.open('imagem_pb.jpg').convert('L')
+import os
+base_dir = os.path.dirname(os.path.abspath(__file__))
+path_img = os.path.join(base_dir,'imagem_pb.jpg' )
+img = Image.open(path_img).convert('L')
 
 pixel_count = [pixel for pixel in img.getdata()]
-
 pixel_count = bytes(pixel_count)
 
 with open('gray_pixel_count.bin', 'wb') as f:
