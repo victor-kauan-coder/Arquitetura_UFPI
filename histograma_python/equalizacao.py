@@ -3,8 +3,15 @@ from PIL import Image
 import os
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-path_img = os.path.join(base_dir, 'imagem_pb.jpg')
+path_img = os.path.join(base_dir, "imagem_pb.jpg")
 frequency_count = [0] * 256
+
+caminho_arquivo = "C:\\Users\\kauan\\Documents\\Code\\Arquitetura\\TrabalhoHistograma\\Arquitetura_UFPI\\trabalho\\histograma_equalizado_rars.txt"
+
+with open(caminho_arquivo, "r") as arquivo:
+    lista_asm = [int(linha.strip().split()[-1]) for linha in arquivo]
+
+print(lista_asm)
 
 im = Image.open(path_img)
 
@@ -47,7 +54,7 @@ for x in range(width):
         im_equalizada.putpixel((x, y), novo_valor)
 
 # Salva a nova imagem
-im_equalizada.save('imagem_equalizada.jpg')
+im_equalizada.save('imagem_equalizada_python.jpg')
 
 fig = px.histogram(niveis, nbins=256, title="Interactive Histogram")
 fig.show()
