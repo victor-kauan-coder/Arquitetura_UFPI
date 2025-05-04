@@ -3,10 +3,10 @@ from PIL import Image
 import os
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-path_img = os.path.join(base_dir + "\\imagens", "1.jpg")
+path_img = os.path.join(base_dir + "/imagens", "1.jpg")
 frequency_count = [0] * 256
 
-caminho_arquivo = "C:\\Users\\kauan\\Documents\\Code\\Arquitetura\\TrabalhoHistograma\\Arquitetura_UFPI\\trabalho\\histograma_equalizado_rars.txt"
+caminho_arquivo = "histograma_equalizado_rars.txt"
 
 with open(caminho_arquivo, "r") as arquivo:
     lista_asm = [int(linha.strip().split()[-1]) for linha in arquivo]
