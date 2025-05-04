@@ -1,4 +1,5 @@
 import plotly.express as px
+from criar_imagem import *
 from PIL import Image
 import os
 
@@ -45,16 +46,8 @@ with open(nome_arquivo, 'w') as file:
         file.write(f"Pixel {pixel} - ocorrencia {value}\n")
 
 print(f'O arquivo {nome_arquivo} foi criado com sucesso!')
-im_equalizada = Image.new('L', (width, height))
 
-for x in range(width):
-    for y in range(height):
-        valor_original = im.getpixel((x, y))
-        novo_valor = lista_asm[valor_original]
-        im_equalizada.putpixel((x, y), novo_valor)
-
-# Salva a nova imagem
-im_equalizada.save('imagem_equalizada_rars.jpg')
+criar_imagem(im,lista_asm,name="Imagem_PB_equalizada_assembly")
 
 fig = px.histogram(lista_asm, nbins=256, title="Interactive Histogram")
 fig.show()

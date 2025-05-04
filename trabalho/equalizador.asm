@@ -3,9 +3,9 @@
 .data
 newline:       .string "\n"
 temp:          .word 0
-filename:      .string "/home/davidson/Documentos/UFPI/3-periodo/Arquitetura-de-computadores/TrabalhoArquitetura/RISC-V/Arquitetura_UFPI/trabalho/bins/gray_pixel_count.bin" 
+filename:      .string "bins/gray_pixel_count.bin" 
 .align 2
-output:        .string "/home/davidson/Documentos/UFPI/3-periodo/Arquitetura-de-computadores/TrabalhoArquitetura/RISC-V/Arquitetura_UFPI/histograma_equalizado_rars.txt" 
+output:        .string "histograma_equalizado_rars.txt" 
 .align 2
 buffer:        .space 21120                # Buffer de 1KB
 pixel:         .string  "Pixel \0"
