@@ -1,4 +1,5 @@
 import plotly.express as px
+import math
 import numpy as np
 from criar_imagem import *
 from PIL import Image
@@ -24,7 +25,7 @@ quant_pixels = sum(counts)
 
 pf = [] #função probabilidade
 for pixels_count in counts:
-    pf.append(pixels_count/quant_pixels)
+    pf.append(pixels_count)
 
 cdf = []
 acumulator = 0
@@ -33,8 +34,7 @@ for probability in pf:
     cdf.append(acumulator)
 niveis = []
 for sk in cdf:
-    niveis.append(round(sk*(255)))
-
+    niveis.append(int((sk*(255))//quant_pixels))
 
 nome_arquivo = 'histograma_equalizado_rars.txt'
 
@@ -51,8 +51,19 @@ with open(nome_arquivo, 'w') as file:
 print(f'O arquivo {nome_arquivo} foi criado com sucesso!')
 # print(niveis)
 # print(lista_asm)
+
 criar_imagem(im, lista_asm, name="Imagem_PB_equalizada_assembly")
 criar_imagem(im, niveis, name="Imagem_PB_equalizada_altonivel")
+iguais = True
+with open("histograma_equalizado_altonivel.txt","r") as file_1:
+    with open("histograma_equalizado_rars.txt","r") as file_2:
+        for index,(linha1,linha2) in enumerate(zip(file_1,file_2)):
+            if int(linha1.strip().split()[-1]) != int(linha2.strip().split()[-1]):
+                iguais = False
+                break
+        if iguais:    
+            print("iguais")    
+
 
 fig = px.histogram(lista_asm, nbins=256, title="Histograma do assembly")
 fig.show()
