@@ -253,4 +253,4 @@ Pixel 251 - ocorrencia 86
 Pixel 252 - ocorrencia 84
 Pixel 253 - ocorrencia 82
 Pixel 254 - ocorrencia 86
-Pixel 255 - ocorrencia 256
+Pixel 255 - ocorrencia 1

@@ -1,30 +1,28 @@
 .include "macro.asm"
 
 .data
+buffer:        .space 21120                # Buffer de 1KB
 newline:       .string "\n"
-temp:          .word 0
+.align 2
 filename:      .string "bins/gray_pixel_count.bin" 
 .align 2
 output:        .string "histograma_equalizado_rars.txt" 
 .align 2
-buffer:        .space 21120                # Buffer de 1KB
+output_bin:    .string "pixel_bytes.bin"
+.align 2
+
 pixel:         .string  "Pixel \0"
 .align 2
 frequencia:     .string  " - ocorrencia "
 .align 2
 total_acumulado:.word 0
-.align 2
-acumulada: 	.space 1024
-.align 2
-num: .word 0
-equalizada:     .space 1024
+pixel_count: 	.space 1024
 success_msg:   .string "\nLeitura concluída. Bytes lidos: "
 .align 2
 error_open:    .string "\nErro ao abrir o arquivo!"
 .align 2
 error_read:    .string "\nErro ao ler o arquivo!"
 .align 2
-
 
 .text
 .globl main
@@ -73,8 +71,8 @@ main:
     # Loop de impressão dos bytes
     li t0, 0                 # Contador
     la t1, buffer            # Ponteiro12
-    la s0, acumulada
-    
+    la s0, pixel_count
+    fill_zero(s0, 256)
 calcular_freq:
     bge t0, s1, CDF
     lbu t6, 0(t1)            # Carregar byte sem sinal
@@ -83,9 +81,6 @@ calcular_freq:
     lw t5, 0(t4)
     addi t5,t5,1
     sw t5,0(t4)
-    # Imprimir valor decimal
-    #li a7, 1
-    #ecall
     addi t1, t1, 1           
     addi t0, t0, 1          
     j calcular_freq
@@ -93,7 +88,7 @@ calcular_freq:
 CDF:
     li t0, 0                 # Contador
     la t1, buffer            # Ponteiro12
-    la s0, acumulada
+    la s0, pixel_count
     
 CDF_loop:
     bge t0, s1, equalizer
@@ -112,7 +107,8 @@ CDF_loop:
 equalizer:
     li t0, 0
     li t2, 255
-    la s0, acumulada
+    la s0, pixel_count
+
 loop:
     bge t0, s1, result
     slli t3, t0, 2
@@ -143,7 +139,7 @@ read_error:
 result:
     li t0, 0                 # Contador
     la t1, buffer            # Ponteiro12
-    la s0, acumulada
+    la s0, pixel_count
 result_loop:
     bge t0, s1, calcular_freq2
     #print_int(t1)
@@ -162,9 +158,8 @@ calcular_freq2:
 
     li t0, 0                 # Contador
     la t1, buffer            # Ponteiro12
-    la s0, equalizada
-    fill_zero(s0, 255)
-    print_int(t0)
+    la s0, pixel_count
+    fill_zero(s0, 256)
 calcular_freq2_loop:
     bge t0, s1, exit
     lbu t6, 0(t1)            # Carregar byte sem sinal
@@ -184,7 +179,17 @@ calcular_freq2_loop:
     j calcular_freq2_loop
     
 exit:
+    la s0, pixel_count
     escrever_frequencias(s0)
+    create_file(output_bin)
+    li a7, 1024
+    la a0, output_bin
+    li a1, 9
+    ecall
+    mv s0, a0
+    write_string_addr(buffer, s0, 21120)
+    print_int(a0)
+    close_file(s0)
     li a7, 10               
     ecall
    
