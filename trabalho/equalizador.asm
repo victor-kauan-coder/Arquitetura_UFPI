@@ -13,7 +13,11 @@ pixel:         .string  "Pixel \0"
 frequencia:     .string  " - ocorrencia "
 .align 2
 total_acumulado:.word 0
+.align 2
 acumulada: 	.space 1024
+.align 2
+num: .word 0
+equalizada:     .space 1024
 success_msg:   .string "\nLeitura concluída. Bytes lidos: "
 .align 2
 error_open:    .string "\nErro ao abrir o arquivo!"
@@ -90,6 +94,7 @@ CDF:
     li t0, 0                 # Contador
     la t1, buffer            # Ponteiro12
     la s0, acumulada
+    
 CDF_loop:
     bge t0, s1, equalizer
     slli a3, t0, 2
@@ -136,8 +141,50 @@ read_error:
     ecall
 
 result:
-   escrever_frequencias(s0)
+    li t0, 0                 # Contador
+    la t1, buffer            # Ponteiro12
+    la s0, acumulada
+result_loop:
+    bge t0, s1, calcular_freq2
+    #print_int(t1)
+    lbu t3, 0(t1)
+    #print_int(t3)
+    slli t4, t3, 2
+    add t3, t4, s0
+    lw t5, 0(t3)
+    #print_int(t5)
+    sb t5, (t1)
+    addi t0, t0, 1 
+    addi t1, t1, 1
+    j result_loop
+   
+calcular_freq2:
+
+    li t0, 0                 # Contador
+    la t1, buffer            # Ponteiro12
+    la s0, equalizada
+    fill_zero(s0, 255)
+    print_int(t0)
+calcular_freq2_loop:
+    bge t0, s1, exit
+    lbu t6, 0(t1)            # Carregar byte sem sinal
+    
+    slli t3,t6, 2
+    
+    add t4, s0, t3
+    lw t5, 0(t4)
+    addi t5, t5, 1
+    sw t5,0(t4)
+    #print_int(t4)
+    # Imprimir valor decimal
+    #li a7, 1
+    #ecall
+    addi t1, t1, 1           
+    addi t0, t0, 1          
+    j calcular_freq2_loop
+    
 exit:
+    escrever_frequencias(s0)
     li a7, 10               
     ecall
    

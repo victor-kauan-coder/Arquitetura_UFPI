@@ -107,12 +107,14 @@ fim_macro:
     add a0, %x, zero
     li a7, 1
     ecall
+    print_newline()
 .end_macro
 
 .macro print_string_from_label(%s)
     la a0, %s
     li a7, 4
     ecall
+
 .end_macro
 
 .macro print_newline
@@ -172,4 +174,27 @@ fim_macro:
     mv a0, %decriptor
     ecall
 .end_macro
+
+.macro fill_zero(%pointer, %count)
+addi sp, sp, -12
+sw t1, (sp)
+sw t2, 4(sp)
+sw t0, 8(sp)
+
+li t0, 0
+li t2, %count
+fill_zero_loop:
+   beq t2, t0, exit_fill_zero
+   slli t1, t0, 2
+   add t1, t1, %pointer
+   sw zero, (t1)
+   addi t0, t0, 1 
+   j fill_zero_loop
+exit_fill_zero:
+lw t1, (sp)
+lw t2, 4(sp)
+lw t0, 8(sp)
+addi sp, sp, 12
+.end_macro
+   
     
