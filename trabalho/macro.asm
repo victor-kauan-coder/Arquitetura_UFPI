@@ -18,7 +18,7 @@ print_freq:
     addi sp, sp, -8
     sw t1, 0(sp)
     sw t2, 4(sp)
-    write_string(pixel, s2, 6)
+    write_string_addr(pixel, s2, 6)
     # Escrever pixel
     mv a0, t1
     la a1, buffer
@@ -28,7 +28,7 @@ print_freq:
     la a1, buffer
     li a7, 64                # Syscall write
     ecall
-    write_string(frequencia, s2, 14)
+    write_string_addr(frequencia, s2, 14)
     # Escrever frequência
     slli t3, t1, 2
     add t4, %reg, t3
@@ -107,12 +107,14 @@ fim_macro:
     add a0, %x, zero
     li a7, 1
     ecall
+    print_newline()
 .end_macro
 
 .macro print_string_from_label(%s)
     la a0, %s
     li a7, 4
     ecall
+
 .end_macro
 
 .macro print_newline
@@ -129,10 +131,10 @@ fim_macro:
     ecall
 .end_macro
 
-.macro write_string(%string, %dec, %size)
+.macro write_string_addr(%addr, %dec, %size)
     li a7, 64          
     mv a0, %dec         
-    la a1, %string     
+    la a1, %addr     
     li a2, %size
     ecall
 .end_macro
@@ -157,9 +159,9 @@ fim_macro:
 
     bltz s0, open_error
 
-    write_string(pixel, s0, 8)      
+    write_string_addr(pixel, s0, 8)      
     write_int_to_file(%x, s0)
-    write_string(frequencia, s0, 15) 
+    write_string_addr(frequencia, s0, 15) 
     write_newline(s0)
     li a7, 57          
     mv a0, s0          
@@ -172,4 +174,29 @@ fim_macro:
     mv a0, %decriptor
     ecall
 .end_macro
+
+.macro fill_zero(%pointer, %count)
+    addi sp, sp, -12
+    sw t1, (sp)
+    sw t2, 4(sp)
+    sw t0, 8(sp)
+
+    li t0, 0
+    li t2, %count
+fill_zero_loop:
+   beq t2, t0, exit_fill_zero
+   slli t1, t0, 2
+   add t1, t1, %pointer
+   sw zero, (t1)
+   addi t0, t0, 1 
+   j fill_zero_loop
+exit_fill_zero:
+    lw t1, (sp)
+    lw t2, 4(sp)
+    lw t0, 8(sp)
+    addi sp, sp, 12
+.end_macro
+
+   
+   
     

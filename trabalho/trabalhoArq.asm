@@ -59,7 +59,7 @@ main:
     li t0, 0                 # Contador
     la t1, buffer            # Ponteiro
     la s0, frequencia
-    
+    fill_zero(s0, 256)
     
 calcular_freq:
     bge t0, s1, result
