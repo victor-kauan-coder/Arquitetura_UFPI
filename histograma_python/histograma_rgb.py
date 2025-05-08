@@ -7,7 +7,7 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 path_img = os.path.join(base_dir + "/imagens", '1.jpg')
 print(path_img)
 #21120
-im = Image.open(path_img)
+im = Image.open(path_img).convert("RGB")
 
 pixels = list(i for i in im.getdata())
 dados = []

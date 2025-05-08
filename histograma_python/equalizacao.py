@@ -95,8 +95,7 @@ for i in range(3):
     with open(f"{arquivos[i]}.txt", "w") as file:
         for pixel,qtd in enumerate(histogramas[i]):
             file.write(f"Pixel {pixel} - ocorrencia {qtd}\n")
-for nivel, freq in enumerate(r_hist):
-    print(f"Vermelho {nivel}: {freq} pixels")
+
 
 # print(niveis)
 # print(lista_asm)
