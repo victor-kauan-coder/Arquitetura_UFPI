@@ -1,8 +1,8 @@
-.macro escrever_frequencias(%reg)
+.macro escrever_frequencias(%reg, %output)
 result:
     # Abrir arquivo de saída
     li a7, 1024
-    la a0, output
+    la a0, %output
     li a1, 1                 
     ecall
     mv s2, a0                # Descritor do arquivo
@@ -107,7 +107,6 @@ fim_macro:
     add a0, %x, zero
     li a7, 1
     ecall
-    print_newline()
 .end_macro
 
 .macro print_string_from_label(%s)
@@ -145,6 +144,21 @@ fim_macro:
     li a1, 1
     ecall
     close_file(a0)
+.end_macro
+
+.macro open_file(%filename, %mode)
+    li a7, 1024              
+    la a0, %filename          
+    li a1, %mode                 # Modo leitura (0 = read-only)
+    ecall
+.end_macro
+
+.macro read_file(%decriptor, %addr, %size)
+    li a7, 63
+    mv a0, %decriptor
+    la a1, %addr
+    li a2, %size
+    ecall
 .end_macro
     
 
@@ -196,7 +210,3 @@ exit_fill_zero:
     lw t0, 8(sp)
     addi sp, sp, 12
 .end_macro
-
-   
-   
-    
