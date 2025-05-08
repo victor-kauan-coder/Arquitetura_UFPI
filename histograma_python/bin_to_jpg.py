@@ -1,8 +1,6 @@
 from PIL import Image
 import os
 
-
-
 def substituir_canais_rgb(imagem_original, arquivo_r, arquivo_g, arquivo_b):
     largura, altura = imagem_original.size
     total_pixels = largura * altura
