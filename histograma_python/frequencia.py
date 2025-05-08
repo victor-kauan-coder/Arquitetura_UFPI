@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 import os
 base_dir = os.path.dirname(os.path.abspath(__file__))
-path_img = os.path.join(base_dir + "/imagens", '1.jpg')
+path_img = os.path.join(base_dir + "/imagens", '3.jpg')
 print(path_img)
 #21120
 im = Image.open(path_img)
