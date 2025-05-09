@@ -80,7 +80,7 @@ fig = px.histogram(
     x="Intensidade",
     color="Canal",
     nbins=256,
-    title="Histograma RGB por Canal",
+    title="Histograma RGB por Canal - Equalizado",
     color_discrete_map={
     "Vermelho": "rgba(255, 102, 102, 0.6)",  # rosa claro
     "Verde":    "rgba(144, 238, 144, 0.6)",  # verde claro
@@ -94,37 +94,3 @@ for i in range(3):
     with open(f"result_python/{arquivos[i]}.txt", "w") as file:
         for pixel,qtd in enumerate(histogramas[i]):
             file.write(f"Pixel {pixel} - ocorrencia {qtd}\n")
-
-
-# print(niveis)
-# print(lista_asm)
-
-# pixels_assembly = criar_imagem(im, lista_asm, name="Imagem_PB_equalizada_assembly")
-# frequencias_assembly = Counter(pixels_assembly)
-
-#pixels_python = criar_imagem(im, niveis, name="Imagem_PB_equalizada_altonivel")
-#frequencias_python = Counter(pixels_python)
-# nome_arquivo = 'histograma_equalizado_rars.txt'
-# with open(nome_arquivo, 'w') as file:
-#     for i in range(256):
-#         file.write(f"Pixel {i} - ocorrencia {frequencias_assembly[i]}\n")
-
-# nome_arquivo = 'histograma_equalizado_altonivel.txt'
-# print(f'O arquivo {nome_arquivo} foi criado com sucesso!')
-# with open(nome_arquivo, 'w') as file:
-#     for i in range(256):
-#         file.write(f"Pixel {i} - ocorrencia {frequencias_python[i]}\n")
-# # iguais = True
-# with open("histograma_equalizado_altonivel.txt","r") as file_1:
-#     with open("histograma_equalizado_rars.txt","r") as file_2:
-#         for index,(linha1,linha2) in enumerate(zip(file_1,file_2)):
-#             if int(linha1.strip().split()[-1]) != int(linha2.strip().split()[-1]):
-#                 iguais = False
-#                 break
-#         if iguais:    
-#             print("iguais")    
-
-
-
-# fig = px.histogram(pixels_assembly, nbins=256, title="Histograma do assembly" )
-# fig.show()
