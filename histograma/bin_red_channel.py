@@ -9,5 +9,5 @@ im = Image.open(path_img)
 red_frequency_count = list(i[0] for i in im.getdata())
 bytes_red = bytes(red_frequency_count)
 
-with open("./trabalho/bins/red_channel.bin", 'wb') as f:
+with open("./bins/red_channel.bin", 'wb') as f:
     f.write(bytes_red)

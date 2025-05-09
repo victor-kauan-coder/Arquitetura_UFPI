@@ -1,7 +1,6 @@
 .include "macro.asm"
 .data
 filename:      .string "bins/red_channel.bin"  
-.align 2
 
 buffer:        .space 21120                # Buffer de 1KB
 frequencia: 	.space 1024
@@ -21,7 +20,7 @@ main:
     li a1, 0                 # Modo leitura (0 = read-only)
     li a2, 0                 # Permissões (obrigatório)
     ecall
-    
+    print_string_from_label(filename)
     bltz a0, open_error      # Tratar erro de abertura
     mv s0, a0                # Salvar descritor
 
@@ -91,6 +90,7 @@ read_error:
     li a7, 57
     mv a0, s0
     ecall
+    j exit
 
 result:
 li t1,0
